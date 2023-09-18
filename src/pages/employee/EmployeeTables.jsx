@@ -92,7 +92,7 @@ export const EmployeeTables = () => {
       headerName: "Role",
       flex: 1,
       renderCell: (params) => {
-        //const accountType = params.row.accountType;
+        const accountType = params.row.accountType;
         let roleText = "";
         let roleColor = "";
 
