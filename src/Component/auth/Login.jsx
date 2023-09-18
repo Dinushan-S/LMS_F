@@ -27,7 +27,11 @@ export const Login = () => {
     // Fetch the user data from the server
     const fetchUsersData = async () => {
       try {
+<<<<<<< HEAD
         const response = await axios.get("/Auth/allUsers");
+=======
+        const response = await axios.get("http://localhost:7185/api/Auth/allUsers");
+>>>>>>> 9f2d8fd698c77e732b5e6a0e1803f9e67a90740c
         setUserData(response.data); // Save the fetched data in the state
       } catch (error) {
         console.error("Error fetching user data:", error);
