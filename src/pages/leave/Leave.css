@@ -1,9 +1,0 @@
-/* Custom styles for the header */
-.custom-header {
-    background-color: #cfcfd6;
-    color: #591515;
-    font-weight: 800;
-    text-transform: uppercase; /* Add this property to make the text uppercase */
-
-    /* Add any other styles you want for the header */
-  }
