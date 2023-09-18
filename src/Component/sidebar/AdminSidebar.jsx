@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sidebar, Menu, MenuItem,  } from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem, } from "react-pro-sidebar";
 import { Box, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -135,7 +135,7 @@ export default function AdminSidebar() {
             className="custom-menu-item" // Apply the custom class
           >
             <Link
-                          to="/users/admin/dashboard"
+              to="/users/admin/dashboard"
 
               style={{ color: "inherit", textDecoration: "none" }}
             >
@@ -149,12 +149,12 @@ export default function AdminSidebar() {
               borderRadius: "12px",
             }}
           >
-                 <Link
-                          to="/users/admin/AdminHome"
+            <Link
+              to="/users/admin/AdminHome"
 
               style={{ color: "inherit", textDecoration: "none" }}
             >
-                          Home
+              Home
 
             </Link>
           </MenuItem>
@@ -200,8 +200,8 @@ export default function AdminSidebar() {
               Manager Leaves
             </Link>
           </MenuItem>
-         
-          
+
+
           <MenuItem
             icon={<SummarizeIcon />}
             className="custom-menu-item" // Apply the custom class
@@ -209,7 +209,11 @@ export default function AdminSidebar() {
               borderRadius: "12px",
             }}
           >
-            Report
+            <Link
+              to="/users/admin/report"
+            >
+              Report
+            </Link>
           </MenuItem>
           <MenuItem
             icon={<LogoutIcon />}
