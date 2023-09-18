@@ -121,6 +121,12 @@ function App() {
             </Routes>
             <Routes>
               <Route
+                path="/users/admin/report"
+                element={<Pages.Report />}
+              />
+            </Routes>
+            <Routes>
+              <Route
                 path="/users/admin/departments/:id"
                 element={<Pages.EditDepartment />}
               />
