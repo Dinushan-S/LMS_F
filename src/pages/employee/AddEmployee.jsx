@@ -53,7 +53,7 @@ export default function AddEmployee() {
   const handleSave = () => {
     //e.preventDefault();
     form.validateFields().then(async (values) => {
-      const url = "https://localhost:7185/api/Auth";
+      const url = "http://localhost:7185/api/Auth";
 
       // ... (omitted for brevity)
       const selectedDepartmentId = form.getFieldValue("departmentId");

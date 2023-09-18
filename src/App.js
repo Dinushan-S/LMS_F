@@ -8,7 +8,7 @@ import Pages from "./pages/index";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
-axios.defaults.baseURL = 'https://localhost:7185/api';
+axios.defaults.baseURL = 'http://localhost:7185/api';
 
 function App() {
   useEffect(() => {

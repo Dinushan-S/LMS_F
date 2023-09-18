@@ -30,9 +30,9 @@ const ApplyLeave = () => {
       IsApproved: 0, // Assuming the default value is false
       UserId: id, // Replace with the actual user ID or get it dynamically
     };
- 
-     await axios
-      .post(`https://localhost:7185/api/Leave/applyLeave/${id}`, formData, {
+
+    await axios
+      .post(`/Leave/applyLeave/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
 
@@ -64,7 +64,7 @@ const ApplyLeave = () => {
   return (
     <div>
       <Form onFinish={onFinish}>
-      <Form.Item
+        <Form.Item
           label="Type"
           name="Type"
           rules={[{ required: true, message: "Please select leave type!" }]}

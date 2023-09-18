@@ -4,7 +4,7 @@ import axios from "axios";
 import { Box, Typography } from "@mui/material";
 import { Button, Form, Input, message, Select } from "antd";
 import { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const { Item } = Form;
 
@@ -17,14 +17,14 @@ const tailFormItemLayout = {
   wrapperCol: { span: 24, offset: 5 },
 };
 const LeaveTypeOptions = [
-    { value: 0, label: "Annual Leave" },
-    { value: 1, label: "Sick Leave" },
-    { value: 2, label: "Maternity Leave" },
-    { value: 3, label: "Paternity Leave" },
-    { value: 4, label: "Unpaid Leave" },
-  ];
+  { value: 0, label: "Annual Leave" },
+  { value: 1, label: "Sick Leave" },
+  { value: 2, label: "Maternity Leave" },
+  { value: 3, label: "Paternity Leave" },
+  { value: 4, label: "Unpaid Leave" },
+];
 const UpdateLeave = () => {
-      const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
@@ -35,16 +35,16 @@ const UpdateLeave = () => {
     type: "",
     startDate: "",
     endDate: "",
-    reason:'',
+    reason: '',
     isApproved: null,
-    name:""
-    
+    name: ""
+
 
   });
 
   useEffect(() => {
     axios
-      .get(`https://localhost:7185/api/Leave/${id}`)
+      .get(`/Leave/${id}`)
       .then((res) => {
         setValues({
           ...values,
@@ -54,7 +54,7 @@ const UpdateLeave = () => {
           reason: res.data.accountType,
           isApproved: res.data.isApproved,
           name: res.data.departmentId,
-          departmentName:res.data.departmentId,
+          departmentName: res.data.departmentId,
         });
         form.setFieldsValue({
           type: res.data.type,
@@ -74,7 +74,7 @@ const UpdateLeave = () => {
     { value: 2, label: "Reject" },
   ];
 
-  
+
 
 
   // ...
@@ -85,7 +85,7 @@ const UpdateLeave = () => {
     const accountType = parseInt(localStorage.getItem("accountType"));
 
     axios
-      .put(`https://localhost:7185/api/Leave/leave/${id}`, formData,{
+      .put(`/Leave/leave/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -101,13 +101,13 @@ const UpdateLeave = () => {
           navigate('/users/manager/leaves'); // Handle successful update for manager
         }
         setTimeout(() => {
-        
+
         }, 1000);
       })
 
       .catch((err) => {
         setLoading(false); // Stop loading state
-        console.log("here "+err); // Handle error
+        console.log("here " + err); // Handle error
       }); // Perform your update logic here
   };
   const [isApproved, setIsApproved] = useState(values.isApproved);
@@ -128,7 +128,7 @@ const UpdateLeave = () => {
       </Typography>
       <Box sx={{ mb: "100px", height: "100px" }}>
         <Form form={form} onFinish={onFinish} {...formItemLayout}>
-        <Item
+          <Item
             label="Type"
             name="type"
             rules={[
@@ -148,7 +148,7 @@ const UpdateLeave = () => {
               { required: true, message: "Please enter the department name" },
             ]}
           >
-            <Input type="text"disabled />
+            <Input type="text" disabled />
           </Item>
 
           <Item
@@ -158,17 +158,17 @@ const UpdateLeave = () => {
               { required: true, message: "Please enter the department name" },
             ]}
           >
-            <Input type="text"  disabled />
+            <Input type="text" disabled />
           </Item>
 
-<Item
+          <Item
             label="reason"
             name="reason"
             rules={[
               { required: true, message: "Please enter the department name" },
             ]}
           >
-            <Input type="text"   disabled/>
+            <Input type="text" disabled />
           </Item>
 
           <Item
@@ -191,7 +191,7 @@ const UpdateLeave = () => {
             </Select>
           </Item>
 
-     
+
           <Item
             label="name"
             name="name"

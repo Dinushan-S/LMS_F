@@ -1,4 +1,4 @@
-import { Box,  IconButton,  } from "@mui/material";
+import { Box, IconButton, } from "@mui/material";
 import { Header } from "../../Component/Header";
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -23,7 +23,7 @@ export const EmployeeList = () => {
     fetchData();
   }, []);
 
-  
+
 
   const fetchData = async () => {
     const authToken = localStorage.getItem("token");
@@ -31,15 +31,15 @@ export const EmployeeList = () => {
 
     try {
 
-      const response = await axios.get(`https://localhost:7185/api/Auth/employees/${id}`,{
-        headers:{
+      const response = await axios.get(`/Auth/employees/${id}`, {
+        headers: {
           Authorization: `Bearer ${authToken}`,
-         
+
         }
       });
       const filteredData = response.data.filter(item => item.accountType !== 1); // Filter out data with accountType 0 (Admin)
       setData(filteredData);
-console.log(authToken);
+      console.log(authToken);
       // setData(response.data);
       console.log(response.data);
     } catch (error) {
@@ -50,59 +50,61 @@ console.log(authToken);
   };
 
   const columns = [
-    
+
     // { field: "id", headerName: "ID" },
     {
       field: "firstName",
       headerName: "First Name",
       headerClassName: "custom-header",
       flex: 1,
-   
+
     },
     { field: "lastName", headerName: "Last Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
-    { field: "phone", headerName: "Phone",  },
-    { field: "accountType", headerName: "Role", flex: 1,
-    valueGetter: (params) => {
-      const accountType = params.row.accountType;
-      if (accountType === 0) {
-        return "Admin";
-      } 
-      else if (accountType === 1) {
-        return "Manager";
-      }
-      else if (accountType === 2) {
-        return "Staff";
-      }
-       else {
-        return "";
-      }
+    { field: "phone", headerName: "Phone", },
+    {
+      field: "accountType", headerName: "Role", flex: 1,
+      valueGetter: (params) => {
+        const accountType = params.row.accountType;
+        if (accountType === 0) {
+          return "Admin";
+        }
+        else if (accountType === 1) {
+          return "Manager";
+        }
+        else if (accountType === 2) {
+          return "Staff";
+        }
+        else {
+          return "";
+        }
+      },
     },
-   },
     { field: "address", headerName: "Address", flex: 1 },
-    { field: "departmentName", headerName: "Department",    // Access departmentId directly
-  },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    sortable: false,
-    width: 120,
-    renderCell: (params) => (
-      <>
-  
-        <IconButton
-          aria-label="Delete"
-          style={{ color: 'trans' }}
-          onClick={() => handleView(params.row.id)}
-          
-        >
-          <VisibilityIcon />
-        </IconButton>
-      </>
-    ),
-  }
-  
-    
+    {
+      field: "departmentName", headerName: "Department",    // Access departmentId directly
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      sortable: false,
+      width: 120,
+      renderCell: (params) => (
+        <>
+
+          <IconButton
+            aria-label="Delete"
+            style={{ color: 'trans' }}
+            onClick={() => handleView(params.row.id)}
+
+          >
+            <VisibilityIcon />
+          </IconButton>
+        </>
+      ),
+    }
+
+
   ];
 
   const handleView = (employeetId) => {
@@ -111,8 +113,8 @@ console.log(authToken);
   };
   return (
     <Box m="20px">
-      <Header title="Employees"   subtitle={`Managing ${localStorageValue} Department Employees`}></Header>
-    
+      <Header title="Employees" subtitle={`Managing ${localStorageValue} Department Employees`}></Header>
+
 
       <Box
         m="40px 0 0 0"
@@ -146,8 +148,8 @@ console.log(authToken);
           columns={columns}
           components={{ Toolbar: GridToolbar }}
           loading={data.length === 0}
-          style={{ width: '40%' }} 
-          // classes={{}}
+          style={{ width: '40%' }}
+        // classes={{}}
         ></DataGrid>
       </Box>
     </Box>

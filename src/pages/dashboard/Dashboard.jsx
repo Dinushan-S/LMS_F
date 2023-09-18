@@ -27,7 +27,7 @@ export const DashBoard = () => {
     try {
       const authToken = localStorage.getItem("token"); // Replace with your actual token retrieval logic
 
-      const response = await axios.get(`https://localhost:7185/api/Leave/LeaveRequests`,{
+      const response = await axios.get(`/Leave/LeaveRequests`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

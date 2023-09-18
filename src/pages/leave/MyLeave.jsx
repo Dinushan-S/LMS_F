@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {  DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Box,IconButton,Typography } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, IconButton, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {  message } from 'antd';
+import { message } from 'antd';
 import moment from "moment";
 
 const MyLeave = () => {
@@ -20,8 +20,8 @@ const MyLeave = () => {
 
     try {
       setLoading(true);
-      const response = await axios.get(`https://localhost:7185/api/Leave/userLeaves/${id}`,{
-        headers:{
+      const response = await axios.get(`/Leave/userLeaves/${id}`, {
+        headers: {
           Authorization: `Bearer ${authToken}`,
 
         }
@@ -42,47 +42,50 @@ const MyLeave = () => {
 
   const columns = [
 
-    { field: "type", headerName: "type", flex: 1 ,    renderCell: (params) => {
-      const leaveType = params.row.type;
-      let roleText = "";
-      let roleColor = "";
+    {
+      field: "type", headerName: "type", flex: 1, renderCell: (params) => {
+        const leaveType = params.row.type;
+        let roleText = "";
+        let roleColor = "";
 
-      switch (leaveType) {
-        case 0:
-          roleText = "AnnualLeave";
-          break;
-        case 1:
-          roleText = "SickLeave";
-          break;
-        case 2:
-          roleText = "MaternityLeave";
-          break;
+        switch (leaveType) {
+          case 0:
+            roleText = "AnnualLeave";
+            break;
+          case 1:
+            roleText = "SickLeave";
+            break;
+          case 2:
+            roleText = "MaternityLeave";
+            break;
           case 3:
             roleText = "PaternityLeave";
             break;
-            case 4:
-              roleText = "UnpaidLeave";
-              break;
-        default:
-          roleText = "";
-          roleColor = "black"; // Customize the color for other cases.
-          break;
-      }
+          case 4:
+            roleText = "UnpaidLeave";
+            break;
+          default:
+            roleText = "";
+            roleColor = "black"; // Customize the color for other cases.
+            break;
+        }
 
-      return (
-        <span style={{ color: roleColor }}>
-          {roleText}
-        </span>
-      );
-    },},
-    { field: "startDate", headerName: "Start Date", flex: 1 ,renderCell: renderDateCell},
-    { field: "endDate", headerName: "End Date", flex: 1 ,renderCell: renderDateCell},
+        return (
+          <span style={{ color: roleColor }}>
+            {roleText}
+          </span>
+        );
+      },
+    },
+    { field: "startDate", headerName: "Start Date", flex: 1, renderCell: renderDateCell },
+    { field: "endDate", headerName: "End Date", flex: 1, renderCell: renderDateCell },
     { field: "reason", headerName: "Reason", flex: 1 },
-    { field: "isApproved", headerName: "Reason", flex: 1 ,    renderCell: (params) => {
+    {
+      field: "isApproved", headerName: "Reason", flex: 1, renderCell: (params) => {
         const accountType = params.row.isApproved;
         let roleText = "";
         let roleColor = "";
-  
+
         switch (accountType) {
           case 0:
             roleText = "Pending";
@@ -101,33 +104,34 @@ const MyLeave = () => {
             roleColor = "black"; // Customize the color for other cases.
             break;
         }
-  
+
         return (
           <span style={{ color: roleColor }}>
             {roleText}
           </span>
         );
-      },},
-    
-      {
-        field: "actions",
-        headerName: "Actions",
-        sortable: false,
-        width: 120,
-        renderCell: (params) => (
-          <>
-            <IconButton
-              aria-label="Delete"
-              style={{ color: 'red' }}
-              onClick={() => handleDelete(params.id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </>
-        ),
       },
+    },
+
+    {
+      field: "actions",
+      headerName: "Actions",
+      sortable: false,
+      width: 120,
+      renderCell: (params) => (
+        <>
+          <IconButton
+            aria-label="Delete"
+            style={{ color: 'red' }}
+            onClick={() => handleDelete(params.id)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
   ];
- 
+
   const handleDelete = async (id) => {
     try {
       const confirmed = window.confirm("Are you sure you want to delete this Leave Request?");
@@ -138,8 +142,8 @@ const MyLeave = () => {
 
       const authToken = localStorage.getItem("token");
 
-      const response = await axios.delete(`https://localhost:7185/api/Leave/deleteLeave/${id}`,{
-        headers:{
+      const response = await axios.delete(`/Leave/deleteLeave/${id}`, {
+        headers: {
           Authorization: `Bearer ${authToken}`,
 
         }
@@ -160,25 +164,25 @@ const MyLeave = () => {
     }
   };
 
-  
+
 
   return (
     <Box m="40px 0 0 0" height="80vh">
-    {loading ? (
-      <Typography variant="h6">Loading...</Typography>
-    ) : leaveRequests.length === 0 ? (
-      <Typography variant="h6">No leave requests found.</Typography>
-    ) : (
-      <DataGrid
-        rows={leaveRequests}
-        columns={columns}
-        components={{ Toolbar: GridToolbar }}
-        loading={loading}
-        autoHeight
-        pageSize={10}
-      />
-    )}
-  </Box>
+      {loading ? (
+        <Typography variant="h6">Loading...</Typography>
+      ) : leaveRequests.length === 0 ? (
+        <Typography variant="h6">No leave requests found.</Typography>
+      ) : (
+        <DataGrid
+          rows={leaveRequests}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+          loading={loading}
+          autoHeight
+          pageSize={10}
+        />
+      )}
+    </Box>
   );
 };
 
