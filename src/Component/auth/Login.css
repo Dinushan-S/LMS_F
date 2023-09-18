@@ -1,0 +1,166 @@
+
+body{
+  width: 100%;
+}
+.box-form{
+    
+  margin: 0 auto;
+  margin-top: 40px;
+  width: 80%;
+  background: #FFFFFF;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  /* flex: 1 1 100%; */
+  align-items: stretch;
+  justify-content: space-between;
+  box-shadow: 0 0 20px 6px #c0c1cc85;
+
+}
+
+.box-form .left .overlay h1 {
+    font-size: 80px;
+    line-height: 1;
+    font-weight: 900;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .box-form .right h4 {
+    font-size: 6vmax;
+    line-height: 0;
+  }
+
+  .box-form .right input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 25px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #B0B3B9;
+  }
+  .box-form .right .remember-me--forget-password input {
+    margin: 0;
+    margin-right: 7px;
+    width: auto;
+  }
+  .box-form .right button {
+    float: right;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 12px 35px;
+    border-radius: 11px;
+    display: inline-block;
+
+    border: 0;
+    outline: 0;
+    background-color: #23408B
+
+
+    ;
+    /* box-shadow: 0px 4px 20px 0px #49c628a6; */
+    /* background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%); */
+  }
+  
+      
+  
+.box-form .left{
+    background-size: contain;
+    color: #FFFFFF;
+    width: 550 px;
+    /* height: ; */
+    background-repeat: no-repeat;
+    background-image: url("https://paysquare.com/wp-content/uploads/2023/01/leave-management-system-500x500-1.png");
+    /* overflow: hidden; */
+}
+
+.box-form .left .overlay{
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    background: #23408B;
+    /* overflow: hidden; */
+    box-sizing: border-box;
+    text-align: center;
+}
+.box-form .left .overlay h1{
+color: white;
+  padding-top: 150px;
+}
+
+.box-form .right{
+    padding: 40px;
+    overflow: hidden;    
+    width: 90%;
+
+}
+
+.box-form .right .inputs{
+    overflow: hidden;
+}
+
+.box-form .right .remember-me--forget-password{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+label {
+    display: block;
+    position: relative;
+    margin-left: 30px;
+  }
+  
+  label::before {
+    content: ' \f00c';
+    position: absolute;
+    font-family: FontAwesome;
+    background: transparent;
+    border: 3px solid #70F570;
+    border-radius: 4px;
+    color: transparent;
+    left: -30px;
+    transition: all 0.2s linear;
+  }
+  
+  label:hover::before {
+    font-family: FontAwesome;
+    content: ' \f00c';
+    color: #fff;
+    cursor: pointer;
+    background: #70F570;
+  }
+  
+  label:hover::before .text-checkbox {
+    background: #70F570;
+  }
+  
+  label span.text-checkbox {
+    display: inline-block;
+    height: auto;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s linear;
+  }
+  
+  label input[type="checkbox"] {
+    display: none;
+  }
+
+
+  .error{
+    color:red;
+  }
+
+  
+
+.custom-menu-item {
+  color: blue;
+}
+
+.custom-menu-item:hover {
+  color: red;
+  background: yellow;
+}

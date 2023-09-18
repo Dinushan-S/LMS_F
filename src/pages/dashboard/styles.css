@@ -1,0 +1,4 @@
+/* Override styles for the checked Radio Button wrapper in the Calendar component */
+.ant-calendar .css-dev-only-do-not-override-12zuas .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+  background-color:red;
+}

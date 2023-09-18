@@ -1,0 +1,60 @@
+
+.cardBox {
+    position: relative;
+    /* left: 300px; */
+    /* background: white; */
+    transition: 0.6s;
+    /* width: 90%; */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.cardBox .card {
+    position: relative;
+    /* background: whitesmoke; */
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 2px 7px 25px #ece9e9;
+    cursor: pointer;
+    border-radius: 60px;
+}
+
+.cardBox .card .number {
+    position: relative;
+    font-weight: 500;
+    font-size: 2.5em;
+    color: #23408B;
+}
+
+
+
+.cardBox .card .cardName {
+    position: relative;
+    font-weight: 500;
+    font-size: 1.5em;
+    text-align: center;
+    color: #23408B;
+}
+
+
+.cardBox .card .iconBx   {
+    width: 30px;
+    height: 30px;
+    color: green;
+    size: 20px;
+
+}
+
+.cardBox .card:hover {
+background: #287bff ;
+}
+
+/* AdminHome.css */
+.link-unstyled {
+    text-decoration: none;
+    color: inherit;
+    /* Add any other custom styles you want to remove the link appearance */
+  }
+  
