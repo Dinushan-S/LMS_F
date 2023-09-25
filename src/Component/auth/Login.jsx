@@ -48,7 +48,7 @@ export const Login = () => {
     } else if (password.length < 4) {
       setErrorMessage("Password should be at least 4 characters long.");
     } else {
-      const url = "http://localhost:7185/api/Auth/login";
+      const url = "https://localhost:7185/api/Auth/login";
       const data = {
         ID: id,
         Email: email,

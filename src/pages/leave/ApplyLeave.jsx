@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 const ApplyLeave = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [isEndDateDisabled, setIsEndDateDisabled] = useState(true); // Initially disable the end date field
 
   const LeaveTypes = {
     AnnualLeave: 0,
@@ -19,7 +21,7 @@ const ApplyLeave = () => {
   const onFinish = async (values) => {
     setLoading(true);
     const id = localStorage.getItem("id");
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     const selectedType = LeaveTypes[values.Type];
 
     const formData = {
@@ -27,15 +29,14 @@ const ApplyLeave = () => {
       Type: selectedType,
       StartDate: values.StartDate.format("YYYY-MM-DDTHH:mm:ss"),
       EndDate: values.EndDate.format("YYYY-MM-DDTHH:mm:ss"),
-      IsApproved: 0, // Assuming the default value is false
-      UserId: id, // Replace with the actual user ID or get it dynamically
+      IsApproved: 0,
+      UserId: id,
     };
 
     await axios
       .post(`/Leave/applyLeave/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-
         },
       })
       .then((response) => {
@@ -51,14 +52,40 @@ const ApplyLeave = () => {
         setLoading(false);
       })
       .catch((error) => {
-        message.error(error.response?.data?.message || "An error occurfvfred");
+        message.error(error.response?.data?.message || "An error occurred");
         setLoading(false);
       });
   };
 
   // Function to disable dates before today
   const disabledDate = (current) => {
-    return current && current < moment().add(1, "days").startOf("day");
+    return (
+      current &&
+      (current < moment().add(1, "days").startOf("day") ||
+        current < selectedStartDate)
+    );
+  };
+
+  // Function to disable end date before selected start date
+  // const disabledEndDate = (current) => {
+  //   return (
+  //     selectedStartDate &&
+  //     current &&
+  //     current < selectedStartDate.startOf("day")
+  //   );
+  // };
+  const disabledEndDate = (current) => {
+    return (
+      selectedStartDate &&
+      (current && current <= selectedStartDate.startOf("day"))
+    ) || current.isSame(selectedStartDate, "day"); // Disable the selected start date
+  };
+
+
+  // Function to handle start date change
+  const handleStartDateChange = (date) => {
+    setSelectedStartDate(date);
+    setIsEndDateDisabled(false); // Enable the end date field when start date is selected
   };
 
   return (
@@ -69,7 +96,6 @@ const ApplyLeave = () => {
           name="Type"
           rules={[{ required: true, message: "Please select leave type!" }]}
         >
-          {/* Replace with your own options */}
           <Select>
             <Select.Option value="AnnualLeave">Annual Leave</Select.Option>
             <Select.Option value="SickLeave">Sick Leave</Select.Option>
@@ -83,14 +109,24 @@ const ApplyLeave = () => {
           name="StartDate"
           rules={[{ required: true, message: "Please select start date!" }]}
         >
-          <DatePicker showTime format="YYYY-MM-DD " disabledDate={disabledDate} />
+          <DatePicker
+            showTime
+            format="YYYY-MM-DD"
+            disabledDate={disabledDate}
+            onChange={handleStartDateChange}
+          />
         </Form.Item>
         <Form.Item
           label="End Date"
           name="EndDate"
           rules={[{ required: true, message: "Please select end date!" }]}
         >
-          <DatePicker showTime format="YYYY-MM-DD" disabledDate={disabledDate} />
+          <DatePicker
+            showTime
+            format="YYYY-MM-DD"
+            disabled={isEndDateDisabled} // Disable the end date field initially
+            disabledDate={disabledEndDate}
+          />
         </Form.Item>
         <Form.Item
           label="Reason"

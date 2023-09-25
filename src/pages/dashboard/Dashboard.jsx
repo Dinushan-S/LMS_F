@@ -27,20 +27,21 @@ export const DashBoard = () => {
     try {
       const authToken = localStorage.getItem("token"); // Replace with your actual token retrieval logic
 
-      const response = await axios.get(`/Leave/LeaveRequests`, {
+      const response = await axios.get(`https://localhost:7185/api/Leave/managerLeave`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       });
+      
       if (response.status === 200) {
-        const leaveDtoList = response.data;
-        setLeaveRequests(leaveDtoList);
-        console.log(leaveDtoList);
+        const managerLeaveDtoList = response.data; // Assuming the API returns data in the appropriate format
+        setLeaveRequests(managerLeaveDtoList);
+        console.log(managerLeaveDtoList);
       } else {
-        console.error('Failed to fetch leave requests');
+        console.error('Failed to fetch manager leave requests');
       }
     } catch (error) {
-      console.error('Error fetching leave requests:', error);
+      console.error('Error fetching manager leave requests:', error);
     }
   };
 
@@ -49,22 +50,27 @@ export const DashBoard = () => {
     const leaveOnDate = leaveRequests.filter(
       (leaveRequest) => dayjs(leaveRequest.startDate).isSame(formattedDate, 'day')
     );
+    let employeeNames = '';
 
+    if (leaveOnDate.length > 0) {
+      // If there are employees on leave, concatenate their names
+      employeeNames = leaveOnDate.map((leave) => leave.name).join(', ');
+    }
     return (
       <div
-        style={{
-          backgroundColor: leaveOnDate.length > 0 ? 'red' : 'transparent',
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          cursor: 'pointer', // Show pointer cursor when hovering over the cell
-        }}
-        onClick={() => handleCellClick(formattedDate, leaveOnDate)}
-      >
-        {leaveOnDate.length}
-      </div>
+      style={{
+        backgroundColor: leaveOnDate.length > 0 ? 'red' : 'transparent', // Change background color to red
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        cursor: 'pointer', // Show pointer cursor when hovering over the cell
+      }}
+      onClick={() => handleCellClick(formattedDate, leaveOnDate)}
+    >
+      {employeeNames}
+    </div>
     );
   };
 
