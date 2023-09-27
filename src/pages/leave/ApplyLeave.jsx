@@ -66,16 +66,41 @@ const ApplyLeave = () => {
   //   );
   // };
 
+  // const disabledDate = (current) => {
+  //   const today = moment();
+  //   const tomorrow = moment().add(1, "days");
+  //   const cutoffTime = moment().set({ hour: 16, minute: 0, second: 0, millisecond: 0 });
+
+  //   const selectedDate = current && moment(current).startOf("day");
+  //   const isBeforeCutoff = moment().isBefore(cutoffTime);
+
+  //   if (selectedDate && selectedDate.isSame(today, "day") && isBeforeCutoff) {
+  //     return selectedDate.isBefore(cutoffTime);
+  //   } else {
+  //     return (
+  //       current &&
+  //       (current < (isBeforeCutoff ? today : tomorrow).startOf("day") ||
+  //         current < selectedStartDate)
+  //     );
+  //   }
+  // };
   const disabledDate = (current) => {
     const today = moment();
     const tomorrow = moment().add(1, "days");
-    const cutoffTime = moment().set({ hour: 18, minute: 0, second: 0, millisecond: 0 });
+    const cutoffTime = moment().set({ hour: 16, minute: 0, second: 0, millisecond: 0 });
 
     const selectedDate = current && moment(current).startOf("day");
     const isBeforeCutoff = moment().isBefore(cutoffTime);
+    console.log(isBeforeCutoff);
+    //console.log(selectedDate);
 
     if (selectedDate && selectedDate.isSame(today, "day") && isBeforeCutoff) {
-      return selectedDate.isBefore(cutoffTime);
+      return (
+        current &&
+        (current < (isBeforeCutoff ? today : tomorrow).startOf("day") ||
+          current < selectedStartDate)
+      );
+      //return selectedDate.isBefore(cutoffTime);
     } else {
       return (
         current &&
@@ -84,7 +109,6 @@ const ApplyLeave = () => {
       );
     }
   };
-
   // Function to disable end date before selected start date
   // const disabledEndDate = (current) => {
   //   return (
