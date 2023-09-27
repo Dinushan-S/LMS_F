@@ -58,12 +58,31 @@ const ApplyLeave = () => {
   };
 
   // Function to disable dates before today
+  // const disabledDate = (current) => {
+  //   return (
+  //     current && 
+  //     (current < moment().add(1, "days").startOf("day") ||
+  //       current < selectedStartDate)
+  //   );
+  // };
+
   const disabledDate = (current) => {
-    return (
-      current &&
-      (current < moment().add(1, "days").startOf("day") ||
-        current < selectedStartDate)
-    );
+    const today = moment();
+    const tomorrow = moment().add(1, "days");
+    const cutoffTime = moment().set({ hour: 9, minute: 0, second: 0, millisecond: 0 });
+
+    const selectedDate = current && moment(current).startOf("day");
+    const isBeforeCutoff = moment().isBefore(cutoffTime);
+
+    if (selectedDate && selectedDate.isSame(today, "day") && isBeforeCutoff) {
+      return selectedDate.isBefore(cutoffTime);
+    } else {
+      return (
+        current &&
+        (current < (isBeforeCutoff ? today : tomorrow).startOf("day") ||
+          current < selectedStartDate)
+      );
+    }
   };
 
   // Function to disable end date before selected start date
@@ -74,11 +93,19 @@ const ApplyLeave = () => {
   //     current < selectedStartDate.startOf("day")
   //   );
   // };
+  // const disabledEndDate = (current) => {
+  //   return (
+  //     selectedStartDate &&
+  //     (current && current <= selectedStartDate.startOf("day"))
+  //   ) || current.isSame(selectedStartDate, "day"); // Disable the selected start date
+  // };
   const disabledEndDate = (current) => {
+    const maxSelectableDate = selectedStartDate.clone().add(7, "days").startOf("day");
+
     return (
       selectedStartDate &&
       (current && current <= selectedStartDate.startOf("day"))
-    ) || current.isSame(selectedStartDate, "day"); // Disable the selected start date
+    ) || current.isSame(selectedStartDate, "day") || current > maxSelectableDate;
   };
 
 

@@ -170,10 +170,7 @@ const AllLeave = () => {
         //     ),
         // },
     ];
-    const handleView = (employeetId) => {
-        console.log(employeetId);
-        // navigate(`/users/manager/Employee/${employeetId}`);
-    };
+
 
 
     const handleEditClick = (id) => {
