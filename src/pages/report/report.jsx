@@ -5,20 +5,24 @@ import { Search } from '@mui/icons-material';
 import axios from 'axios';
 import { TextField } from '@mui/material';
 
+
 const Report = () => {
-    const [search, setSearch] = useState('')
+    const [inputValue, setInputValue] = useState('')
     const [result, setResult] = useState([])
     const [leaveResults, setLeaveResults] = useState([])
-    var casulLeave = 0;
-    var sickLeave = 0;
-    var annualLeave = 0;
-    var otherleave = 0;
+    const [visible, setVisible] = useState(true);
+    const [show, setShow] = useState(true);
+    var AnnualLeave = 0;
+    var SickLeave = 0;
+    var MaternityLeave = 0;
+    var PaternityLeave = 0;
+    var UnpaidLeave = 0;
     // useEffect(() => {
     //     fetchData();
     // }, [])
 
     const fetchData = async () => {
-        await axios.get(`/Leave/LeaveRequests/4`)
+        await axios.get(`/Leave/LeaveRequests/`)
             .then((response => {
                 setLeaveResults(response.data);
                 console.log(response.data);
@@ -26,41 +30,19 @@ const Report = () => {
             }))
     }
 
-    // const handleChange = (value) => {
-    //     //e.preventDefault();
-    //     console.log(result.id);
-    //     const result = countries.filter((country) => {
-    //         return (
-    //             value &&
-    //             country &&
-    //             country.name &&
-    //             country.name.toLowerCase().includes(value)
-    //         );
-    //     });
-    //     //setResult(result);
-    //     // setSearch(value);
-    // }
-
-    // if (search.length > 0) {
-    //     countries.filter((country) => {
-    //         return country.name.match(search);
-    //     })
-    // }
-
     return (
         <div className='report'>
             <div className='search-bar-container'>
-                <SearchBar setResult={setResult} />
-                <SearchResultsList result={result} setLeaveResults={setLeaveResults} />
+                <SearchBar setResult={setResult} setVisible={setVisible} />
+                {visible && <SearchResultsList result={result} setLeaveResults={setLeaveResults} setVisible={setVisible} />}
             </div>
-            <table>
+            {/* <table>
                 <tr>
                     <th>Name</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Reason</th>
                     <th>type</th>
-                    {/* <th>Continent</th> */}
 
                 </tr>
                 {leaveResults.map((results, index) => (
@@ -77,23 +59,26 @@ const Report = () => {
                         </td>
                     </tr>
                 ))}
-            </table>
+            </table> */}
             <div>Total Leave : {leaveResults.length}</div>
             <div>
-                {/* {leaveResults.map((results, index) => (
-                    <div aria-disabled>
-                        {results.type === 1 ? casulLeave++ : null}
-                        {results.type === 2 ? sickLeave++ : null}
-                        {results.type === 3 ? annualLeave++ : null}
-                        {results.type === 4 ? otherleave++ : null}
+
+                {leaveResults.map((results, index) => (
+                    <div style={{ color: " white" }}>
+                        {show && results.type === 0 ? AnnualLeave++ : null}
+                        {show && results.type === 1 ? SickLeave++ : null}
+                        {show && results.type === 2 ? MaternityLeave++ : null}
+                        {show && results.type === 3 ? PaternityLeave++ : null}
+                        {show && results.type === 4 ? UnpaidLeave++ : null}
                     </div>
-                ))} */}
+                ))}
 
 
-                <div>Casual Leave : {casulLeave}</div>
-                <div>Sick Leave : {sickLeave}</div>
-                <div>Annual Leave : {annualLeave}</div>
-                <div>Other Leave : {otherleave}</div>
+                <div>Annual Leave : {AnnualLeave}</div>
+                <div>Sick Leave : {SickLeave}</div>
+                <div>Maternity Leave : {MaternityLeave}</div>
+                <div>Paternity Leave : {PaternityLeave}</div>
+                <div>Unpaid Leave : {UnpaidLeave}</div>
             </div>
 
         </div>
@@ -101,3 +86,4 @@ const Report = () => {
 };
 
 export default Report;
+

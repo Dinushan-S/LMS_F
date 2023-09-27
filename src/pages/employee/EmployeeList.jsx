@@ -52,13 +52,7 @@ export const EmployeeList = () => {
   const columns = [
 
     // { field: "id", headerName: "ID" },
-    {
-      field: "firstName",
-      headerName: "First Name",
-      headerClassName: "custom-header",
-      flex: 1,
-
-    },
+    { field: "firstName", headerName: "First Name", headerClassName: "custom-header", flex: 1 },
     { field: "lastName", headerName: "Last Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
     { field: "phone", headerName: "Phone", },

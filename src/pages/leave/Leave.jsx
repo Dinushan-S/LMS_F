@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Box, Button, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../Component/Header";
 import moment from "moment";
 import "./Leave.css";
@@ -11,6 +11,8 @@ const Leave = () => {
   const [leaves, setLeaves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [localStorageValue, setLocalStorageValue] = useState('');
+  const location = useLocation();
+  const employeeLeave = false;
 
   const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ const Leave = () => {
 
     if (valueFromLocalStorage) {
       setLocalStorageValue(valueFromLocalStorage);
-      console.log(valueFromLocalStorage);
+      console.log("local storagea value", valueFromLocalStorage);
 
     }
     fetchLeaves();
@@ -32,7 +34,8 @@ const Leave = () => {
 
     try {
       setLoading(true);
-
+      //   setLoading(false);
+      // }
       if (accountType === 0) {
         const response = await axios.get(`/Leave/managerLeave`, {
 
@@ -43,6 +46,7 @@ const Leave = () => {
         setLeaves(response.data);
         console.log(response.data);
         setLoading(false);
+
       }
       else if (accountType === 1) {
         const response = await axios.get(`/Leave/Leave/department/${departmentId}`);
@@ -64,6 +68,11 @@ const Leave = () => {
   const renderDateCell = (params) => {
     const date = moment(params.value).format('YYYY-MM-DD');
     return <div>{date}</div>;
+  };
+
+  const renderDateCells = (params) => {
+    // const date = moment(params.value).format('YYYY-MM-DD');
+    return <div>hi</div>;
   };
 
   const columns = [
@@ -107,7 +116,6 @@ const Leave = () => {
     { field: "endDate", headerName: "End Date", headerClassName: "custom-header", flex: 1, renderCell: renderDateCell },
     { field: "name", headerName: "name", flex: 1, headerClassName: "custom-header", },
     { field: "departmentName", headerClassName: "custom-header", headerName: "departmentName", flex: 1 },
-
     {
       field: "isApproved", headerName: "isApproved", flex: 1, headerClassName: "custom-header", renderCell: (params) => {
         const isApproved = params.row.isApproved;

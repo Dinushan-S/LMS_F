@@ -4,8 +4,8 @@ import "./SearchBar.css"
 import { json } from 'react-router-dom';
 import axios from 'axios';
 
-export const SearchBar = ({ setResult }) => {
-    const [search, setSearch] = useState('')
+export const SearchBar = ({ setResult, setVisible }) => {
+    // const [search, setSearch] = useState('')
     const [input, setInput] = useState("")
 
     const fetchData = (value) => {
@@ -23,7 +23,7 @@ export const SearchBar = ({ setResult }) => {
         //         console.log(result);
         //         setResult(result);
         //     })
-        axios.get("http://localhost:7185/api/Auth")
+        axios.get("/Auth/allUsers")
             .then((response) => {
                 const result = response.data.filter((user) => {
                     return (
@@ -50,6 +50,7 @@ export const SearchBar = ({ setResult }) => {
         //e.preventDefault();
         setInput(value);
         fetchData(value);
+        // setInput(inputValue);
     }
 
     // if (search.length > 0) {
@@ -66,6 +67,7 @@ export const SearchBar = ({ setResult }) => {
                 placeholder='Search'
                 onChange={(e) => handleChange(e.target.value)}
                 value={input}
+                onFocus={() => setVisible(true)}
             />
         </div>
     )

@@ -19,6 +19,7 @@ import ImageProfile from "./ImageProfile";
 export default function AdminSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [imageData, setImageData] = useState(null);
+  const [employeeLeave, setEmployeeLeave] = useState(true);
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -32,6 +33,7 @@ export default function AdminSidebar() {
 
   const accountType = parseInt(localStorage.getItem("accountType"));
   let accountTypeName = "";
+  console.log('emp', employeeLeave);
 
   if (accountType === 0) {
     accountTypeName = "ADMIN";
@@ -195,9 +197,26 @@ export default function AdminSidebar() {
           >
             <Link
               to="/users/admin/leaves"
+
               style={{ color: "inherit", textDecoration: "none" }}
             >
               Manager Leaves
+            </Link>
+          </MenuItem>
+          <MenuItem
+            icon={<ApprovalIcon />}
+            className="custom-menu-item" // Apply the custom class
+            sx={{
+              borderRadius: "12px",
+            }}
+          >
+            <Link
+              // employeeLeave={employeeLeave}
+              // to="/users/admin/leaves"
+              to="/users/admin/employeeLeave"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Employees Leaves
             </Link>
           </MenuItem>
 

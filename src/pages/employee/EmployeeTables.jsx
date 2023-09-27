@@ -11,16 +11,24 @@ import { message } from 'antd';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import '../leave/Leave.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import moment from "moment";
+
 
 export const EmployeeTables = () => {
   const navigate = useNavigate();
+  // const [userId, setUserId] = useState('');
   const [accountType, setAccountType] = useState('');
-
+  const [leaves, setLeaves] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState([]);
   useEffect(() => {
     fetchData();
   }, [accountType]);
+
+  // useEffect(() => {
+  //   fetchLeaves();
+  // }, [userId]);
 
 
   // Function to map department IDs to colors
@@ -54,6 +62,9 @@ export const EmployeeTables = () => {
         });
         const filteredData = response.data.filter(item => item.accountType !== 0); // Filter out data with accountType 0 (Admin)
         setData(filteredData);
+        // const responseData = axios.get(`/Leave/userLeaves/7`);
+        // setLeaves(responseData);
+        // console.log("res", responseData);
       }
       else if (accountType === 1) {
         const response = await axios.get(`/Auth/employee/${departmentId}`, {
@@ -74,16 +85,53 @@ export const EmployeeTables = () => {
     }
   };
 
+  const fetchLeaves = async (id) => {
+    const departmentId = parseInt(localStorage.getItem("departmentId")); // Convert to number
+    const accountType = parseInt(localStorage.getItem("accountType")); // Convert to number
+    const authToken = localStorage.getItem("token"); // Replace with your actual token retrieval logic
+
+    const response = await axios.get(`/Leave/userLeaves/${id}`);
+    if (response.data.length === 0) {
+      message.info('No leave requests found');
+    } else {
+      //  response.data;
+      console.log("user leave", response.data);
+      // setLoading(false);
+    }
+    // try {
+    //   const response = await axios.get(`/Leave/userLeaves/${id}`);
+    //   if (response.data.length === 0) {
+    //     message.info('No leave requests found');
+    //   } else {
+    //     setLeaves(response.data);
+    //     console.log("user leave", response.data);
+    //     setLoading(false);
+    //   }
+
+    // } catch (error) {
+    //   console.error("Error fetching leave requests:", error);
+    //   setLoading(false);
+    // }
+  };
+
+
+  const renderDateCell = (params) => {
+
+    // userId = params.id;
+    // let filtered = allProducts.filter((product)=>{
+    //   let productDate = new Date(product["createdAt"]);
+    //   return(productDate>= date.selection.startDate &&
+    //     productDate<= date.sele
+    // console.log("params", params.id);
+    // console.log("leave", leaves);
+    const date = moment(params.value).format('YYYY-MM-DD');
+    return <div>{date}</div>;
+  };
+
   const columns = [
 
     // { field: "id", headerName: "ID" },
-    {
-      field: "firstName",
-      headerName: "First Name",
-      flex: 1,
-      headerClassName: "custom-header",
-      cellClassName: "name-colunm--cell",
-    },
+    { field: "firstName", headerName: "First Name", flex: 1, headerClassName: "custom-header", cellClassName: "name-colunm--cell" },
     { field: "lastName", headerClassName: "custom-header", headerName: "Last Name", flex: 1 },
     { field: "email", headerClassName: "custom-header", headerName: "Email", flex: 1 },
     { field: "phone", headerClassName: "custom-header", headerName: "Phone", },
@@ -141,6 +189,7 @@ export const EmployeeTables = () => {
         );
       },
     },
+    { fiels: "startDate", headerName: "status", headerClassName: "custom-header", flex: 1, renderCell: renderDateCell },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -167,6 +216,14 @@ export const EmployeeTables = () => {
                 onClick={() => handleDelete(params.id)}
               >
                 <DeleteIcon />
+              </IconButton>
+              <IconButton
+                aria-label="View"
+                style={{ color: 'trans' }}
+                onClick={() => handleView(params.row.id)}
+
+              >
+                <VisibilityIcon />
               </IconButton>
             </>
           );
