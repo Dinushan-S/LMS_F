@@ -189,7 +189,7 @@ const AllLeave = () => {
 
     return (
         <Box m="40px 0 0 0" height="80vh">
-            <Header title="Employees" subtitle={`Managing Department Manager Leaves.`}></Header>
+            <Header title="Employees" subtitle={`Managing All Employee Leaves.`}></Header>
             <br />
             {loading ? (
                 <Typography variant="h6">Loading...</Typography>

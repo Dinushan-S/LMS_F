@@ -139,7 +139,18 @@ const EditEmployee = () => {
             label="Last Name"
             name="lastName"
             rules={[
-              { required: true, message: "Please enter the valid lastname" },
+              {
+                type: "name",
+                message: "The input is not a valid Name!",
+              },
+              {
+                required: true,
+                message: "Please input your Username!",
+              },
+              {
+                whitespace: true,
+                min: 3,
+              },
             ]}
           >
             <Input type="text" />
@@ -166,7 +177,15 @@ const EditEmployee = () => {
             label="Phone"
             name="phone"
             rules={[
-              { required: true, message: "Please enter the valid phone" },
+              {
+                required: true,
+                message: "Please input your phone number!",
+              },
+              {
+                required: true,
+                pattern: /^(?:7|0|(?:\+94))[0-9]{9}$/,
+                message: "Phone number is not valid!",
+              },
             ]}
           >
             <Input type="text" />
@@ -196,7 +215,14 @@ const EditEmployee = () => {
             label="address"
             name="address"
             rules={[
-              { required: true, message: "Please enter the valid address" },
+              {
+                required: true,
+                message: "Please input valid Address!",
+              },
+              {
+                whitespace: true,
+                min: 3,
+              },
             ]}
           >
             <Input type="text" />
