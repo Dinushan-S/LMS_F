@@ -69,7 +69,7 @@ const ApplyLeave = () => {
   const disabledDate = (current) => {
     const today = moment();
     const tomorrow = moment().add(1, "days");
-    const cutoffTime = moment().set({ hour: 9, minute: 0, second: 0, millisecond: 0 });
+    const cutoffTime = moment().set({ hour: 18, minute: 0, second: 0, millisecond: 0 });
 
     const selectedDate = current && moment(current).startOf("day");
     const isBeforeCutoff = moment().isBefore(cutoffTime);

@@ -80,7 +80,7 @@ const EditEmployee = () => {
         message.success("Update Successfully."); // Display success message
 
         // setTimeout(() => {
-        navigate('/users/admin/department')// Handle successful update
+        navigate('users/admin/employee')// Handle successful update
         // }, 1000);
         // Delay navigation by 1 second (1000 milliseconds)
       })
