@@ -80,7 +80,7 @@ const EditEmployee = () => {
         message.success("Update Successfully."); // Display success message
 
         // setTimeout(() => {
-        navigate('users/admin/employee')// Handle successful update
+        navigate('/users/admin/employee')// Handle successful update
         // }, 1000);
         // Delay navigation by 1 second (1000 milliseconds)
       })
@@ -129,7 +129,7 @@ const EditEmployee = () => {
             label="First Name"
             name="firstName"
             rules={[
-              { required: true, message: "Please enter the department name" },
+              { required: true, message: "Please enter valid username" },
             ]}
           >
             <Input type="text" />
@@ -139,7 +139,7 @@ const EditEmployee = () => {
             label="Last Name"
             name="lastName"
             rules={[
-              { required: true, message: "Please enter the department name" },
+              { required: true, message: "Please enter the valid lastname" },
             ]}
           >
             <Input type="text" />
@@ -149,7 +149,14 @@ const EditEmployee = () => {
             label="Email"
             name="email"
             rules={[
-              { required: true, message: "Please enter the department name" },
+              {
+                type: "email",
+                message: "The input is not valid E-mail!",
+              },
+              {
+                required: true,
+                message: "Please input your E-mail!",
+              },
             ]}
           >
             <Input type="text" />
@@ -159,7 +166,7 @@ const EditEmployee = () => {
             label="Phone"
             name="phone"
             rules={[
-              { required: true, message: "Please enter the department name" },
+              { required: true, message: "Please enter the valid phone" },
             ]}
           >
             <Input type="text" />
@@ -189,7 +196,7 @@ const EditEmployee = () => {
             label="address"
             name="address"
             rules={[
-              { required: true, message: "Please enter the department name" },
+              { required: true, message: "Please enter the valid address" },
             ]}
           >
             <Input type="text" />

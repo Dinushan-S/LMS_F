@@ -57,7 +57,7 @@ const EditDepartmentScreen = () => {
 
     setLoading(true); // Start loading state
     axios
-      .put(`https://localhost:7185/api/Department/${id}`, formData, {
+      .put(`/Department/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         }
