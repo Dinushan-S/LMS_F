@@ -1,15 +1,26 @@
 .report {
     background-color: #eee;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
 }
 
 .search-bar-container {
-    padding-top: 20vh;
+    padding-top: 5vh;
     width: 40%;
     margin: auto;
-    display: flex;
+
     flex-direction: column;
     align-items: center;
     min-width: 200px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.inline {
+    display: flex;
+    justify-content: space-between;
 }
