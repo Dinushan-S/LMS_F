@@ -26,6 +26,7 @@ const Report = () => {
     const [show, setShow] = useState(true);
 
     const [counts, setCounts] = useState({});
+    const [haveData, setHaveData] = useState(false);
 
     const [dates, setDates] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState("");
@@ -43,23 +44,19 @@ const Report = () => {
 
     useEffect(() => {
         fetchAllLeave();
-        leaveCount();
     }, []);
 
     useEffect(() => {
         fetchSelectedLeave();
+        leaveCount();
     }, [selectedMonth])
 
     const fetchAllLeave = async () => {
         try {
             const response = await axios.get('/Leave/LeaveAllRequests');
-            setDates(response.data);
-            console.log(selectedMonth);
-            console.log(response.data)
-            var date = response.data;
-            date.map((result) => (
-                console.log(result.startDate)
-            ))
+            const approvedLeave = response.data.filter((item) => item.isApproved === 1);
+            console.log(approvedLeave)
+            setDates(approvedLeave);
             // const selectedMonth = "September";
             // // const data1 = [...new Set(dates.map((date) => ))];
             // const data1 = dates.filter((date) => moment(date.startDate).format("MMMM") === selectedMonth);
@@ -92,24 +89,36 @@ const Report = () => {
 
         }
     }
+    //
+    const userLeaveCounts1 = selectedData.reduce((counts, item) => {
+        if (item.isApproved === 1) {
+            counts[item.name] = (counts[item.name] || 0) + 1;
+        }
+        return counts;
+    }, {});
 
+    const sortedCounts = Object.fromEntries(
+        Object.entries(userLeaveCounts1).sort((a, b) => b[1] - a[1])
+    );
+
+    console.log(sortedCounts);
+    //
     const leaveCount = async () => {
         const count = selectedData.reduce((count, data) => {
             console.log(selectedData);
             if (data.isApproved === 1) {
                 count[data.name] = (count[data.name] || 0) + 1;
+                console.log(count);
             }
             return count;
         }, {});
-        setCounts(count);
-    }
-
-    console.log(counts);
+        console.log(count);
+        setHaveData(true);
+    };
     const userLeaveCounts = selectedData.reduce((counts, data) => {
         console.log(selectedData);
         if (data.isApproved === 1) {
             counts[data.name] = (counts[data.name] || 0) + 1;
-            console.log("user count", counts)
         }
         return counts;
     }, {});
@@ -138,18 +147,16 @@ const Report = () => {
                 </select>
             </div>
             <div>
-                {counts.length > 0 &&
-                    selectedData.map((data) => (
-                        <table key={data.id}>
-                            <td>{data.name}</td>
-                            <td>{data.type}</td>
-                            <td>{counts[data.name]}</td>
-                            {/* <td>{data.name && handleCount(data.name)}</td> */}
-                            {/* <td>{count[data.name]}</td> */}
-                            {/* {console.log(nameCounts)} */}
-                        </table>
-                    ))
-                }
+                {haveData && selectedData.map((data) => (
+                    <table key={data.id}>
+                        <td>{data.name}</td>
+                        <td>{data.type}</td>
+                        <td>{userLeaveCounts[data.name]}</td>
+                        {/* <td>{data.name && handleCount(data.name)}</td> */}
+                        {/* <td>{count[data.name]}</td> */}
+                        {/* {console.log(nameCounts)} */}
+                    </table>
+                ))}
             </div>
             <div className='search-bar-container'>
                 <SearchBar setResult={setResult} setVisible={setVisible} />
@@ -240,11 +247,22 @@ const Report = () => {
                                 Most Days Away
                             </Typography>
                             <hr />
+                            {/* {haveData && selectedData.map((data) => (
+                                <Typography component="div" sx={{ justifyContent: "space-between" }} noWrap>
+                                    <div className='inline' key={data.id}>
+                                        <div>{data.name}</div>
+                                        <div>{userLeaveCounts[data.name]}</div>
+                                    </div>
+                                </Typography>
+                            ))} */}
                             <Typography component="div" sx={{ justifyContent: "space-between" }} noWrap>
-                                <div className='inline'>
-                                    <div>Name</div>
-                                    <div>Days</div>
-                                </div>
+                                {Object.entries(sortedCounts).map(([name, count]) => (
+                                    <div className='inline' key={name}>
+                                        <div>{name}</div>
+                                        <div>{count}</div>
+                                    </div>
+                                ))}
+
                             </Typography>
                         </CardContent>
                         <CardActions>
