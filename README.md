@@ -1,3 +1,6 @@
+# DeployMent
+I user Netlify to deploy link: (https://6520f29fd713cf429f62c3ff--bright-pixie-0363c5.netlify.app/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
