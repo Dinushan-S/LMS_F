@@ -8,42 +8,28 @@ export const SearchBar = ({ setResult, setVisible }) => {
     // const [search, setSearch] = useState('')
     const [input, setInput] = useState("")
 
-    const fetchData = (value) => {
-        // fetch('https://jsonplaceholder.typicode.com/users')
-        //     .then((response) => response.json())
-        //     .then(json => {
-        //         const result = json.filter((user) => {
-        //             return (
-        //                 //value &&
-        //                 user &&
-        //                 user.name &&
-        //                 user.name.toLowerCase().includes(value)
-        //             );
-        //         });
-        //         console.log(result);
-        //         setResult(result);
-        //     })
-        axios.get("/Auth/allUsers")
+    const fetchData = async (value) => {
+        const dataSet = await axios.get('/Leave/LeaveAllRequests')
+            .then((response) => {
+                return response.data.map((user) => user.userId)
+            });
+        console.log(dataSet);
+        await axios.get("/Auth/allUsers")
             .then((response) => {
                 const result = response.data.filter((user) => {
-                    return (
-                        value &&
-                        user &&
-                        user.firstName &&
-                        user.firstName.toLowerCase().includes(value)
-                    );
+                    if (dataSet.includes(user.id)) {
+                        return (
+                            value &&
+                            user &&
+                            user.firstName &&
+                            user.firstName.toLowerCase().includes(value)
+                        );
+                    }
                 })
-
-
                 console.log(result.map((results, index) => (results)));
                 //console.log(result);
                 setResult(result);
             })
-
-
-
-
-
     }
 
     const handleChange = (value) => {
@@ -52,12 +38,6 @@ export const SearchBar = ({ setResult, setVisible }) => {
         fetchData(value);
         // setInput(inputValue);
     }
-
-    // if (search.length > 0) {
-    //     countries.filter((country) => {
-    //         return country.name.match(search);
-    //     })
-    // }
 
     return (
         <div className='input-wrapper'>

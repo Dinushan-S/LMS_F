@@ -19,6 +19,10 @@ import Test from './user/Test.jsx'
 import AdminHome from './home/AdminHome.jsx'
 import Report from './report/report.jsx';
 import AllLeave from './leave/AllLeave.jsx';
+import LeaveSummary from './report/LeaveSummary.jsx';
+// import Overview from './report/Overview.jsx';
+// import TimeOffLeave from './report/TimeOffLeave.jsx';
+// import LeaveReport from './report/LeaveReport.jsx';
 // import {Profile} from './user/Profile.jsx'
 // import Home from "./home/Home";
 // import Leaves from "./leaves/Leaves";
@@ -49,7 +53,11 @@ export default {
     AdminHome,
     Test,
     Report,
-    AllLeave
+    AllLeave,
+    LeaveSummary,
+    // Overview,
+    // TimeOffLeave,
+    // LeaveReport
     // Profile
     // Home,
     // Leaves,

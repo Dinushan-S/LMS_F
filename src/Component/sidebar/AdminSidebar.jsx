@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { cloneElement, useState } from "react";
 import { Sidebar, Menu, MenuItem, } from "react-pro-sidebar";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, MenuList, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import ImageProfile from "./ImageProfile";
+import { Dropdown } from "bootstrap";
+import DropdownButton from "antd/es/dropdown/dropdown-button";
 
 export default function AdminSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -44,6 +46,44 @@ export default function AdminSidebar() {
   } else {
     accountTypeName = "";
   }
+
+  const handleMenuOne = () => {
+    console.log('clicked one');
+  };
+
+  const handleMenuTwo = () => {
+    console.log('clicked two');
+  };
+
+  const Dropdown = ({ trigger, menu }) => {
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+      setOpen(!open);
+    };
+
+    return (
+      <div className="dropdown">
+        {cloneElement(trigger, {
+          onClick: handleOpen,
+        })}
+        {open ? (
+          <ul className="menu">
+            {menu.map((menuItem, index) => (
+              <li key={index} className="menu-item">
+                {cloneElement(menuItem, {
+                  onClick: () => {
+                    menuItem.props.onClick();
+                    setOpen(false);
+                  },
+                })}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    );
+  };
 
   return (
     <Box
@@ -219,9 +259,19 @@ export default function AdminSidebar() {
               Employees Leaves
             </Link>
           </MenuItem>
-
-
-          <MenuItem
+          {/* <Dropdown
+            icon={<SummarizeIcon />}
+            trigger={<button>Dropdown</button>}
+            className="custom-menu-item"
+            sx={{
+              borderRadius: "12px",
+            }}
+            menu={[
+              <button onClick={handleMenuOne}>Menu 1</button>,
+              <button onClick={handleMenuTwo}>Menu 2</button>,
+            ]}
+          /> */}
+          {/* <MenuItem
             icon={<SummarizeIcon />}
             className="custom-menu-item" // Apply the custom class
             sx={{
@@ -230,6 +280,21 @@ export default function AdminSidebar() {
           >
             <Link
               to="/users/admin/report"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Report
+            </Link>
+          </MenuItem> */}
+          <MenuItem
+            icon={<SummarizeIcon />}
+            className="custom-menu-item" // Apply the custom class
+            sx={{
+              borderRadius: "12px",
+            }}
+          >
+            <Link
+              to="/users/admin/reportSummary"
+              style={{ color: "inherit", textDecoration: "none" }}
             >
               Report
             </Link>
@@ -250,3 +315,5 @@ export default function AdminSidebar() {
     </Box>
   );
 }
+
+

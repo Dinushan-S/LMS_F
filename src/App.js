@@ -119,10 +119,18 @@ function App() {
                 element={<Pages.Leave />}
               />
             </Routes>
+            {/* <Router> */}
             <Routes>
               <Route
                 path="/users/admin/report"
                 element={<Pages.Report />}
+              />
+            </Routes>
+            {/* </Router> */}
+            <Routes>
+              <Route
+                path="/users/admin/reportSummary"
+                element={<Pages.LeaveSummary />}
               />
             </Routes>
             <Routes>
@@ -131,7 +139,6 @@ function App() {
                 element={<Pages.EditDepartment />}
               />
             </Routes>
-
             <Routes>
               <Route
                 path="/users/admin/updateLeave/:id"
@@ -144,6 +151,26 @@ function App() {
                 element={<Pages.EditEmployee />}
               />
             </Routes>
+
+            {/* Summary report route */}
+            {/* <Routes>
+              <Route
+                path="/users/admin/reportSummary/overview"
+                element={<Pages.Overview />}
+              />
+            </Routes>
+            <Routes>
+              <Route
+                path="/users/admin/reportSummary/timesOffLeave"
+                element={<Pages.TimeOffLeave />}
+              />
+            </Routes>
+            <Routes>
+              <Route
+                path="/users/admin/reportSummary/leaveReport"
+                element={<Pages.LeaveReport />}
+              />
+            </Routes> */}
 
             {/* *************** manager **************** */}
             <Routes>

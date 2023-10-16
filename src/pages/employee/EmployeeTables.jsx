@@ -62,6 +62,8 @@ export const EmployeeTables = () => {
         });
         const filteredData = response.data.filter(item => item.accountType !== 0); // Filter out data with accountType 0 (Admin)
         setData(filteredData);
+        console.log(filteredData.length);
+        localStorage.setItem("TotalEmployee", filteredData);
         // const responseData = axios.get(`/Leave/userLeaves/7`);
         // setLeaves(responseData);
         // console.log("res", responseData);
